@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".dashboard">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1A5473"
+            android:gravity="center"
+            android:text="AICTE UPDATES"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/untitled" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="A Promise to your better future."
+            android:textColor="#000000"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        app:cardCornerRadius="10sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5sp"
+            android:orientation="vertical"
+            android:padding="3sp">
+
+            <GridView
+                android:id="@+id/gview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnWidth="100sp"
+                android:gravity="center"
+                android:horizontalSpacing="10sp"
+                android:numColumns="2"
+                android:stretchMode="spacingWidthUniform"
+                android:transitionName="transit"
+                android:verticalSpacing="10sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    </LinearLayout>
