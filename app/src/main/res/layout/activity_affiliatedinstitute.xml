@@ -54,8 +54,9 @@
                 android:layout_marginRight="5sp"
                 android:elevation="10sp"
                 android:gravity="center"
-                android:prompt="Institute Type"
-                android:spinnerMode="dropdown" />
+                android:minHeight="48dp"
+                android:spinnerMode="dropdown"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
             <Spinner
                 android:id="@+id/spinnerstate"
@@ -66,8 +67,9 @@
                 android:layout_marginRight="5sp"
                 android:elevation="10sp"
                 android:gravity="center"
-                android:prompt="State"
-                android:spinnerMode="dropdown" />
+                android:minHeight="48dp"
+                android:spinnerMode="dropdown"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
             <Spinner
                 android:id="@+id/spinnerlevel"
@@ -78,8 +80,9 @@
                 android:layout_marginRight="5sp"
                 android:elevation="10sp"
                 android:gravity="center"
-                android:prompt="Select Level"
-                android:spinnerMode="dropdown" />
+                android:minHeight="48dp"
+                android:spinnerMode="dropdown"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <Spinner
                 android:id="@+id/spinner"
@@ -90,8 +93,9 @@
                 android:layout_marginRight="5sp"
                 android:elevation="10sp"
                 android:gravity="center"
-                android:prompt="Select Program"
-                android:spinnerMode="dropdown" />
+                android:minHeight="48dp"
+                android:spinnerMode="dropdown"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <LinearLayout
                 android:layout_width="match_parent"
