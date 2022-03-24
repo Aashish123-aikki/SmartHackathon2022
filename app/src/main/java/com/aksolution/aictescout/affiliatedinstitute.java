@@ -1,13 +1,23 @@
 package com.aksolution.aictescout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +31,9 @@ ArrayList<String> programlist=new ArrayList<> (  );
 ArrayList<String> institueName=new ArrayList<> (  );
 ArrayList<String> instituLink=new ArrayList<> (  );
 ArrayList<String> calandeLink=new ArrayList<> (  );
+DatabaseReference databaseReference= FirebaseDatabase.getInstance ().getReference ("institutelist");
+ListView clglistview;
+    AffiliateAdapter affiliateAdapter;
 Spinner itypeSpinner,stateSpinner,lSpinner,programSpinner;
 Button okbtn;
     @Override
@@ -31,7 +44,14 @@ Button okbtn;
         stateSpinner=findViewById (R.id.spinnerstate);
         lSpinner=findViewById (R.id.spinnerlevel);
         programSpinner=findViewById (R.id.spinner);
+        clglistview=findViewById (R.id.listcolg);
         okbtn=findViewById (R.id.button2);
+        okbtn.setOnClickListener (new View.OnClickListener ( ) {
+            @Override
+            public void onClick(View v) {
+                didTapButton (okbtn);
+            }
+        });
         String typelist[]={"All","Private","Central University","Deemed to be University(Govt)","Deemed to be University(Pvt)",
                 "Deemed University(Government)","Deemed University(Private)","Government",
                 "Govt aided","Private-Aided","Self Financing","State Government University","State Private University",
@@ -46,51 +66,7 @@ Button okbtn;
         };
         String degree[]={"All","Diploma","UG","PG"};
 
-//        String instName[]= {"Ali Yavar Jung National Institute For The Hearing Handicapped, Noida", "Ambedkar Institute of Advanced Communication Technologies & Research, Geeta Colony, Delhi – 110092",
-//                "Bhai Parmanand Institute of Business Studies, Opp. Madhuban, Shakarpur (Extn.), Delhi - 110092",
-//                "ESI - PGIMSR, ESI Hospital, Basaidarpur, New Delhi", "C-DAC, NOIDA (formaly Electronics Research & Development Centre of India) Govt. of India, Anusandhan Bhawan, C - 56/1, Institutional Area, Sector - 62, NOIDA",
-//                "Ch. Brahm Prakash Ayurved Charak Sansthan, Khera Dabar, Najafgarh, Delhi - 110073", "College of Nursing, VMMC & Safdarjang Hospital, New Delhi - 110026",
-//                "College of Nursing, Dr. Ram Manohar Lohia Hospital, New Delhi - 110001", "Delhi Institute of Heritage Research & Management, 18A, Satsang Vihar Marg, Special Institute Area, New Delhi - 67",
-//
-//                "Dr.B.R.Sur Homeopathic Medical College and Hospital and Research Centre, Nanakpura, Moti Bagh, New Delhi - 110021",
-//                "Dr.Ram Manohar Lohia Hospital, Post Graduate Institute of Medical Education & Research (PGIMER), New Delhi",
-//                "Delhi Institute of Tool Engineering, Okhla Industrial Area, Phase - II, Delhi - 20, (Head Office at Wazirpur Industrial Area, Delhi - 110052) ",
-//
-//        "ESIC Dental College, Rohini, New Delhi - 110085 ",
-//        "G.B.Pant Institute of Technology, Okhla, Phase -III, New Delhi ",
-//        "G.B.Pant Govt.Engineering College, Okhla, Phase -III, New Delhi ",
-//        "Ch.Brahm Prakash Govt.Engineering College, Behind Rao Tula Ram Hospital, Jaffarpur, New Delhi - 110073 ",
-//        "National Institute of Labour Economics Research &Development (Formerly IAMR), Narela, Delhi 110040 ",
-//        "Integrated Institute of Technology, Sector 9, Dwarka, New Delhi - 110075 ",
-//        "Lok Nayak Jayaprakash Narayan National Institute of Criminology and Forensic Science, Sector 3, Outer Ring Road, Rohini, Delhi ",
-//        "Meera Bai Integrated Institute of Technology, Maharani Bagh, New Delhi ",
-//        "Morarji Desai National Institute of Yoga, 68, Ashoka Road, New Delhi ",
-//        "National Institute ofPublic Coorperation and Child Development, 5, Siri",
-//        "Institutional Area, Hauz Khas, New Delhi - 110016 ",
-//        "Vardhaman Mahavir Medical College &Safdarjang Hospital, New Delhi - 110026 ",
-//        "State Council of Education Research & Training, Varun Marg, Defence Colony, New Delhi ",
-//        "NDMC Medical college at Hindu Rao Hospital, Malika Ganj, Delhi ",
-//        "Ambedkar Institute of Technology, Shakarpur, Opp.Madhuban, Patparganj Road, Delhi - 92(Earlier as Ambedkar Integrated Institute of Engineering &Technology)",
-//        "Aryabhatt Institute of Technology, Near Shakti Nagar, Tele Exchange, G.T.Karnal Road, New Delhi ",
-//        "Guru Nanak Dev Institute of Technology, Institutional Area, Sector - 15, Rohini, Delhi –110089, Ph .011 - 27567819, 27552645 ",
-//        "Kasturba Gandhi Institute of Technology, Pitampura, Muni Maya Ram Marg, New Delhi - 110088",
-//        "College of Medical Lab Technology, Hindu Rao Hospital, Malkaganj, Delhi ",
-//        "Pusa Institute of Technology ",
-//        "Dr.BSA Hospital Medical College Sector 6, Rohini Delhi - 110085 ",
-//        "Department of Psychiatric Social Work",
-//        };
-//       for(String s:typelist){
-//           institutetypeList.add (s);
-//       }
-//       for(String s:state){
-//           statelist.add (s);
-//       }
-//       for(String s:program){
-//           programlist.add (s);
-//       }
-//       levellist.add ("Diploma");
-//       levellist.add ("UG");
-//       levellist.add ("PG");
+        databaseReference.addListenerForSingleValueEvent (valulisner);
         ArrayAdapter<String> stateadapter=new ArrayAdapter<> (this, android.R.layout.simple_spinner_item,state);
         ArrayAdapter<String> typeadapter=new ArrayAdapter<> (this, android.R.layout.simple_spinner_item,typelist);
         ArrayAdapter<String> programadapter=new ArrayAdapter<> (this, android.R.layout.simple_spinner_item,program);
@@ -102,8 +78,30 @@ Button okbtn;
         itypeSpinner.setAdapter (typeadapter);
         //Adapter over............
 
+      affiliateAdapter  =new AffiliateAdapter (affiliatedinstitute.this,institueName,instituLink,calandeLink);
+        clglistview.setAdapter (affiliateAdapter);
     }
+    ValueEventListener valulisner=new ValueEventListener ( ) {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if(snapshot.exists ()){
+                for(DataSnapshot snapshot1:snapshot.getChildren ()){
+                    institutelist institutelisT=snapshot1.getValue (institutelist.class);
+                    institueName.add (institutelisT.getUniversity ());
+                    calandeLink.add (institutelisT.getAcademicCalender ());
+                    instituLink.add (institutelisT.getWebsitelink ());
+                }affiliateAdapter.notifyDataSetChanged ();
+            }
+            else{
+                Toast.makeText (affiliatedinstitute.this, "No Data!", Toast.LENGTH_SHORT).show ( );
+            }
+        }
 
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    };
     public void didTapButton(Button button) {
         final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
 
