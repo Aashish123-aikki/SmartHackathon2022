@@ -3,7 +3,6 @@ package com.aksolution.aictescout;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.opengl.Visibility;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,12 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class AffiliateAdapter extends ArrayAdapter {
+public class AffiliateAdapter2 extends ArrayAdapter {
     ArrayList<String> uName;
     ArrayList<String> wLink;
     ArrayList<String> cLink;
     Context context;
-    public AffiliateAdapter(@NonNull Context context, ArrayList<String>uName,ArrayList<String>wLink,ArrayList<String>cLink) {
+    public AffiliateAdapter2(@NonNull Context context, ArrayList<String>uName, ArrayList<String>wLink, ArrayList<String>cLink) {
         super (context, R.layout.layout_affiliatelist,uName);
         this.uName=uName;
         this.cLink=cLink;
@@ -49,6 +48,7 @@ public class AffiliateAdapter extends ArrayAdapter {
         weblink.setText (wLink.get (position));
         calenlink.setText (cLink.get (position));
         uniname.setText (uName.get (position));
+        weblink.setVisibility (View.GONE);
         count.setText (Integer.toString (position+1));
         weblink.setOnClickListener (new View.OnClickListener ( ) {
             @Override

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AICTEScout</string>
+    <string name="institutetype">Institute Type</string>
+    <string name="statename">State</string>
+    <string name="ilevel">Select Level</string>
+    <string name="program">Select Program</string>
 </resources>

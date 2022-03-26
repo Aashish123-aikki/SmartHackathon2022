@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -77,7 +78,19 @@ Button okbtn;
         programSpinner.setAdapter (programadapter);
         itypeSpinner.setAdapter (typeadapter);
         //Adapter over............
-
+        clglistview.setOnTouchListener (new View.OnTouchListener ( ) {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction ( )) {
+                    case MotionEvent.ACTION_DOWN:
+                        v.getParent ( ).requestDisallowInterceptTouchEvent (true);
+                    case MotionEvent.ACTION_UP:
+                        v.getParent ( ).requestDisallowInterceptTouchEvent (true);
+                }
+                v.onTouchEvent (event);
+                return  true;
+            }
+        });
       affiliateAdapter  =new AffiliateAdapter (affiliatedinstitute.this,institueName,instituLink,calandeLink);
         clglistview.setAdapter (affiliateAdapter);
     }
@@ -86,11 +99,13 @@ Button okbtn;
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if(snapshot.exists ()){
                 for(DataSnapshot snapshot1:snapshot.getChildren ()){
-                    institutelist institutelisT=snapshot1.getValue (institutelist.class);
-                    institueName.add (institutelisT.getUniversity ());
-                    calandeLink.add (institutelisT.getAcademicCalender ());
-                    instituLink.add (institutelisT.getWebsitelink ());
-                }affiliateAdapter.notifyDataSetChanged ();
+                    for(DataSnapshot snapshot2:snapshot1.getChildren ()) {
+                        institutelist institutelisT = snapshot2.getValue (institutelist.class);
+                        institueName.add (institutelisT.getUniversity ( ));
+                        calandeLink.add (institutelisT.getAcademicCalender ( ));
+                        instituLink.add (institutelisT.getWebsitelink ( ));
+                    }affiliateAdapter.notifyDataSetChanged ();
+                }
             }
             else{
                 Toast.makeText (affiliatedinstitute.this, "No Data!", Toast.LENGTH_SHORT).show ( );
